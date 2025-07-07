@@ -1,0 +1,10 @@
+# Bỏ qua thư mục bị lỗi
+.vs/
+*.suo
+*.user
+
+# Bỏ qua file build
+bin/
+obj/
+*.dll
+*.exe
