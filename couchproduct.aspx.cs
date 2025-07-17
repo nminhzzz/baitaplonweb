@@ -11,7 +11,14 @@ namespace baitaplon
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            // Nếu là request lấy danh sách sản phẩm (AJAX)
+            if (Request.HttpMethod == "GET" && Request.QueryString["action"] == "get_products")
+            {
+                var products = Application["products"] as List<Product> ?? new List<Product>();
+                Response.ContentType = "application/json";
+                Response.Write(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(products));
+                Response.End();
+            }
         }
     }
 }

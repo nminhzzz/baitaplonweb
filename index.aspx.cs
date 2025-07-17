@@ -11,7 +11,7 @@ namespace baitaplon
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Kiểm tra xem URL có ?action=account không
+            // Kiểm tra xem URL có ?action=account hoặc ?action=logout không
             string action = Request.QueryString["action"];
 
             if (action == "account")
@@ -28,6 +28,15 @@ namespace baitaplon
                     Response.Redirect("account.aspx");
                 }
             }
+            else if (action == "logout")
+            {
+                Session.Clear();
+                Session.Abandon();
+                Response.Redirect("signin.aspx");
+            }
+            // Truyền trạng thái đăng nhập sang client
+            bool isLoggedIn = Session["IsLoggedIn"] != null && (bool)Session["IsLoggedIn"];
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "SetLoginStatus", $"window.isLoggedIn = {isLoggedIn.ToString().ToLower()};", true);
         }
 
     }
